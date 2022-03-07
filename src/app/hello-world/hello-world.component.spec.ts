@@ -1,3 +1,4 @@
+import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HelloWorldComponent } from './hello-world.component';
@@ -5,6 +6,7 @@ import { HelloWorldComponent } from './hello-world.component';
 describe('HelloWorldComponent', () => {
   let component: HelloWorldComponent;
   let fixture: ComponentFixture<HelloWorldComponent>;
+  let de: DebugElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,6 +18,8 @@ describe('HelloWorldComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HelloWorldComponent);
     component = fixture.componentInstance;
+    de = fixture.debugElement;
+    
     fixture.detectChanges();
   });
 
