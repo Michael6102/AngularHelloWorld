@@ -19,7 +19,7 @@ describe('HelloWorldComponent', () => {
     fixture = TestBed.createComponent(HelloWorldComponent);
     component = fixture.componentInstance;
     de = fixture.debugElement;
-    
+     
     fixture.detectChanges();
   });
 
