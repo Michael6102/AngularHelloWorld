@@ -11,12 +11,33 @@ pool:
 
 steps:
 - task: NodeTool@0
+  displayName: 'Use Node 16.x'
   inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+    versionSpec: 16.x
+    checkLatest: true
 
-- script: |
-    npm install -g @angular/cli
-    npm install
-    ng build --prod
-  displayName: 'npm install and build'
+- task: Npm@1
+  displayName: 'npm custom'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'install -g @angular/cli'
+
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    verbose: false
+- task: RaulARuiz.angular-cli-1.angular-cli-build-task.AngularCLI@1
+  displayName: 'ng lint'
+  inputs:
+    command: lint
+- task: RaulARuiz.angular-cli-1.angular-cli-build-task.AngularCLI@1
+  displayName: 'ng test'
+  inputs:
+    command: test
+
+- task: RaulARuiz.angular-cli-1.angular-cli-build-task.AngularCLI@1
+  displayName: 'ng build'
+  inputs:
+    prod: false
+
