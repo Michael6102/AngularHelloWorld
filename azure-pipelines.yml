@@ -27,17 +27,10 @@ steps:
   displayName: 'npm install'
   inputs:
     verbose: false
-- task: RaulARuiz.angular-cli-1.angular-cli-build-task.AngularCLI@1
-  displayName: 'ng lint'
-  inputs:
-    command: lint
-- task: RaulARuiz.angular-cli-1.angular-cli-build-task.AngularCLI@1
-  displayName: 'ng test'
-  inputs:
-    command: test
 
-- task: RaulARuiz.angular-cli-1.angular-cli-build-task.AngularCLI@1
-  displayName: 'ng build'
+- task: Npm@1
+  displayName: 'npm buil'
   inputs:
-    prod: false
-
+    command: custom
+    verbose: false
+    customCommand: 'run prod-build-dev'
