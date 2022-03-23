@@ -18,5 +18,7 @@ steps:
     customCommand: 'install -g @angular/cli'
 
 - script: npm install
+          ng lint
+          ng test
           ng build --prod
-  displayName: 'npm install ang build'
+  displayName: 'npm install ang lint, test, build'
