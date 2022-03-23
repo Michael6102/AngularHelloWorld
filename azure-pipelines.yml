@@ -18,19 +18,23 @@ steps:
     customCommand: 'install -g @angular/cli'
 
 - task: Npm@1
+  displayName: 'npm install'
   inputs:
     command: 'install'
 - task: Npm@1
+  displayName: 'ng lint'
   inputs:
     command: 'custom'
     customCommand: 'ng lint'
 
 - task: Npm@1
+  displayName: 'ng test'
   inputs:
     command: 'custom'
     customCommand: 'ng test'
 
 - task: Npm@1
+  displayName: 'ng build'
   inputs:
     command: 'custom'
     customCommand: 'ng build'
