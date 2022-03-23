@@ -10,31 +10,55 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: NodeTool@0
-  displayName: 'Use Node 16.x'
-  inputs:
-    versionSpec: 16.x
-    checkLatest: true
-    customCommand: 'install -g @angular/cli'
 
-- task: Npm@1
-  displayName: 'npm install'
-  inputs:
-    command: 'install'
-- task: Npm@1
-  displayName: 'ng lint'
-  inputs:
-    command: 'custom'
-    customCommand: 'ng lint'
-
-- task: Npm@1
-  displayName: 'ng test'
-  inputs:
-    command: 'custom'
-    customCommand: 'ng test'
-
-- task: Npm@1
-  displayName: 'ng build'
-  inputs:
-    command: 'custom'
-    customCommand: 'ng build'
+  - checkout: self
+    clean: true
+  # - task: SonarCloudPrepare@1
+  #   displayName: Prepare analysis on SonarCloud
+  #   inputs:
+  #     SonarCloud: dd6dda91-3a02-45ff-b659-2a4917efaad9
+  #     organization: michael6102
+  #     scannerMode: Other
+  #     projectKey: nexusAngularProject
+  #     projectName: Nexus Angular Project
+  - task: NodeTool@0
+    displayName: Use Node 16.x
+    inputs:
+      versionSpec: 16.x
+      checkLatest: true
+  - task: Npm@1
+    displayName: npm custom
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: install -g @angular/cli
+  - task: Npm@1
+    displayName: npm install
+    inputs:
+      verbose: false
+      customCommand: install -g @angular/cli
+  - task: AngularCLI@1
+    displayName: ng lint
+    inputs:
+      command: lint
+  - task: AngularCLI@1
+    displayName: ng test
+    inputs:
+      command: test
+  - task: SonarCloudAnalyze@1
+    displayName: Run Code Analysis
+  - task: SonarCloudPublish@1
+    displayName: Publish Quality Gate Result
+  - task: AngularCLI@1
+    displayName: ng build
+    inputs:
+      prod: false
+  - task: ArchiveFiles@2
+    displayName: Archive files
+    inputs:
+      rootFolderOrFile: dist
+  - task: PublishPipelineArtifact@1
+    displayName: Publish Pipeline Artifact
+    inputs:
+      artifactName: drop
+...
